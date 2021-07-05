@@ -43,14 +43,14 @@ pipeline {
     	}
     	steps {
           sh '''
-            pip3 install --upgrade pip
-            pip3 install -r requirements.txt
+            pip install --upgrade pip
+            pip install -r requirements.txt
             ./test_access_rights.sh
           '''
     	}
     	post {
     			always {
-    					junit allowEmptyResults: true, testResults: '**/test-results/*.xml'
+    					junit testResults: '**/test-results/*.xml'
     			}
     	}
     }
