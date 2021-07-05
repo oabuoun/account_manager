@@ -1,7 +1,6 @@
 pipeline {
   environment {
     registry = "oabuoun/account-generation"
-    IMAGE_NAME=${REG}:${BUILD_NUMBER}
     registryCredential = "docker_auth"
     dockerImage = ''
   }
