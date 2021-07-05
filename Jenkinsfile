@@ -19,7 +19,7 @@ pipeline {
     stage('Clone from Git') {
     		steps {
             git branch: 'main',
-            url: 'https://github.com/oabuoun/account_manager.git'
+            url: 'https://github.com/kaiwolff/Account_Generation_Project.git'
     		}
     }
 
