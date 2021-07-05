@@ -42,7 +42,12 @@ pipeline {
     			}
     	}
     	steps {
-          sh 'virtualenv venv & pip install -r requirements.txt && ./test_access_rights.sh'
+          sh '''
+            virtualenv venv
+            pip install --upgrade pip
+            pip install -r requirements.txt
+            ./test_access_rights.sh
+          '''
     	}
     	post {
     			always {
