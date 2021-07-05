@@ -10,7 +10,6 @@ pipeline {
   options {
     skipStagesAfterUnstable()
   }
-  def dockerImage
 
   stages {
     stage('Clone from Git') {
