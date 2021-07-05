@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "jamesdidit72/account-generation"
+    registry = "oabuoun/account-generation"
     registryCredential = "docker_auth"
     dockerImage = ''
   }
@@ -22,7 +22,7 @@ pipeline {
     stage('Build-Test-Image') {
     	steps{
         sh '''
-  			   docker build -t $($registry + ":$BUILD_NUMBER") .
+  			   docker build -t registry + ":$BUILD_NUMBER" .
         '''
     	}
     }
