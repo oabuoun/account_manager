@@ -42,12 +42,11 @@ pipeline {
     			}
     	}
     	steps {
-          sh '. venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt '
-          sh 'pip install -r requirements.txt && ./test_access_rights.sh'
+          sh './test_access_rights.sh'
     	}
     	post {
     			always {
-    					junit allowEmptyResults: true, testResults: '**/test-results/*.xml'
+    					junit testResults: '**/test-results/*.xml'
     			}
     	}
     }
