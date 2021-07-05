@@ -4,8 +4,8 @@ pipeline {
     CONTAINER_NAME = "account-generation1"
     DOCKER_ACCOUNT = "jamesdidit72"
     REGISTRY = "$DOCKER_ACCOUNT" + "$CONTAINER_NAME"
-    registryCredential = "docker_auth"
-    dockerImage = ''
+    REGISTRY_CREDENTIALS = "docker_auth"
+    DOCKER_IMAGE = ''
   }
 
   agent any
@@ -24,9 +24,9 @@ pipeline {
 
     stage('Build-Image') {
     	steps{
-        sh '''
-  			  docker build -t $REGISTRY:$BUILD_NUMBER .
-        '''
+    		script {
+    			DOCKER_IMAGE = docker.build $REGISTRY:$BUILD_NUMBER
+    		}
     	}
     }
 
@@ -48,8 +48,8 @@ pipeline {
     stage('Deploy Image') {
     	steps{
     			script {
-    					docker.withRegistry( '', registryCredential ) {
-    							dockerImage.push()
+    					docker.withRegistry( '', REGISTRY_CREDENTIALS ) {
+    							DOCKER_IMAGE.push()
     					}
     			}
     	}
@@ -57,7 +57,7 @@ pipeline {
 
     stage('Remove Unused docker image') {
     	steps{
-    			sh "docker rmi $registry:$BUILD_NUMBER"
+    			sh "docker rmi $REGISTRY:$BUILD_NUMBER"
     	}
     }
   }
