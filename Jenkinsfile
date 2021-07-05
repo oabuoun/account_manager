@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    conainer_name = "account-generation"
+    conainer_name = "account-generation1"
     registry = "oabuoun/account-generation"
     registryCredential = "docker_auth"
     dockerImage = ''
