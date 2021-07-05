@@ -21,31 +21,22 @@ pipeline {
 
     stage('Build-Image') {
     	steps{
-    			script {
-    			dockerImage = docker.build registry + ":$BUILD_NUMBER"
+    			steps {
+             IMAGE_NAME = registry + ":$BUILD_NUMBER"
+    			   sh "docker build -t $IMAGE_NAME .
     			}
     	}
-    }
-
-    stage('test') {
-        dockerImage.inside {
-            sh '. /tmp/venv/bin/activate && python -m pytest --junitxml=build/results.xml'
-        }
-    }
-
-    stage('collect test results') {
-        junit 'build/results.xml'
     }
 
     stage('Build') {
       agent {
           docker {
-              image 'python:3.9.2'
+              image dockerImage
           }
       }
       steps {
           withCredentials([string(credentialsId: 'sql_auth', variable: 'sqlCredential')]){
-          sh 'echo $sqlCredential > .mysql_password'
+            sh 'echo $sqlCredential > .mysql_password'
           }
           sh 'python3 -m venv venv'
           sh './build.sh'
@@ -56,13 +47,11 @@ pipeline {
     stage('Test access rights') {
     	agent {
     			docker {
-    					image 'qnib/pytest'
+    					image dockerImage
     			}
     	}
     	steps {
           sh '''
-            pip install --upgrade pip
-            pip install -r requirements.txt
             ./test_access_rights.sh
           '''
     	}
