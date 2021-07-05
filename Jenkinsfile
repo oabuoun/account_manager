@@ -26,7 +26,7 @@ pipeline {
     stage('Build-Image') {
     	steps{
     		script {
-    			DOCKER_IMAGE = docker.build $IMAGE_NAME
+    			DOCKER_IMAGE = docker.build IMAGE_NAME
     		}
     	}
     }
