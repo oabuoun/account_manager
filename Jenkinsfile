@@ -23,7 +23,7 @@ pipeline {
     	steps{
     			steps {
              IMAGE_NAME = registry + ":$BUILD_NUMBER"
-    			   sh "docker build -t $IMAGE_NAME .
+    			   sh "docker build -t $IMAGE_NAME ."
     			}
     	}
     }
