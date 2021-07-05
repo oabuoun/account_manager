@@ -4,7 +4,7 @@ pipeline {
     CONTAINER_NAME = "account-generation1"
     DOCKER_ACCOUNT = "jamesdidit72"
     REGISTRY = "$DOCKER_ACCOUNT" + "$CONTAINER_NAME"
-    IMAGE_NAME = $REGISTRY:$BUILD_NUMBER
+    IMAGE_NAME = "$REGISTRY" + "$BUILD_NUMBER"
     REGISTRY_CREDENTIALS = "docker_auth"
     DOCKER_IMAGE = ''
   }
