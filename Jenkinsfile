@@ -34,8 +34,12 @@ pipeline {
     stage('Test') {
     	steps {
         script {
+          withCredentials([string(credentialsId: 'sql_auth', variable: 'sqlCredential')]){
+            sh 'echo $sqlCredential > .mysql_password'
+          }
+
           sh '''
-            docker run --rm --tty -v $PWD/test-results:/reports --workdir $PROJECT_DIR --name $CONTAINER_NAME $IMAGE_NAME pytest --cov=. --cov-report=html:/reports/html_dir --cov-report=xml:/reports/coverage.xml
+            docker run --rm --tty -v .mysql_password/Account-Generator/.mysql_password -v $PWD/test-results:/reports --workdir $PROJECT_DIR --name $CONTAINER_NAME $IMAGE_NAME pytest --cov=. --cov-report=html:/reports/html_dir --cov-report=xml:/reports/coverage.xml
           '''
         }
       }
