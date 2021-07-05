@@ -24,6 +24,8 @@ pipeline {
         sh '''
           REG=\$registry
           IMAGE_NAME=${REG}:${BUILD_NUMBER}
+          pwd
+          ls -la
   			  docker build -t $IMAGE_NAME .
         '''
     	}
