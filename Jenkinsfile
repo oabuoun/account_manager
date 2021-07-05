@@ -1,7 +1,7 @@
 pipeline {
   environment {
-    conainer_name = "account-generation1"
-    registry = "oabuoun/account-generation"
+    PROJECT_DIR = "/Account-Generator"
+    registry = "jamesdidit72/account-generation"
     registryCredential = "docker_auth"
     dockerImage = ''
   }
@@ -20,21 +20,19 @@ pipeline {
     		}
     }
 
-    stage('Build-Test-Image') {
+    stage('Build-Image') {
     	steps{
         sh '''
-          pwd
-          ls -la
   			  docker build -t $registry:$BUILD_NUMBER .
         '''
     	}
     }
 
-    stage('Test access rights') {
+    stage('Test') {
     	steps {
         script {
           sh '''
-            docker run --rm --tty -v $PWD/test-results:/reports --workdir /Account-Generator --name $conainer_name $registry:$BUILD_NUMBER pytest --cov=. --cov-report=html:/reports/html_dir --cov-report=xml:/reports/coverage.xml
+            docker run --rm --tty -v $PWD/test-results:/reports --workdir \$PROJECT_DIR --name $conainer_name $registry:$BUILD_NUMBER pytest --cov=. --cov-report=html:/reports/html_dir --cov-report=xml:/reports/coverage.xml
           '''
         }
       }
@@ -42,14 +40,6 @@ pipeline {
     			always {
     					junit testResults: '**/test-results/*.xml'
     			}
-    	}
-    }
-
-    stage('Build-Image') {
-    	steps{
-    		script {
-    			dockerImage = docker.build registry + ":$BUILD_NUMBER"
-    		}
     	}
     }
 
