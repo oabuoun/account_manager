@@ -19,7 +19,7 @@ pipeline {
     		}
     }
 
-    stage('Build-Image') {
+    stage('Build-Test-Image') {
     	steps{
     			steps {
              IMAGE_NAME_1 = registry + ":$BUILD_NUMBER"
