@@ -10,6 +10,7 @@ pipeline {
   options {
     skipStagesAfterUnstable()
   }
+  def dockerImage
 
   stages {
     stage('Clone from Git') {
@@ -19,7 +20,6 @@ pipeline {
     		}
     }
 
-    def dockerImage
     stage('Build-Image') {
     	steps{
     			script {
@@ -33,7 +33,7 @@ pipeline {
             sh '. /tmp/venv/bin/activate && python -m pytest --junitxml=build/results.xml'
         }
     }
-    
+
     stage('collect test results') {
         junit 'build/results.xml'
     }
