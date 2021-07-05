@@ -34,7 +34,7 @@ pipeline {
     	steps {
         script {
           sh '''
-            docker run --rm --tty -v $PWD/reports:/reports --workdir /Account-Generator --name $conainer_name $registry:$BUILD_NUMBER pytest --cov --cov-report=html:reports/html_dir --cov-report=xml:reports/coverage.xml
+            docker run --rm --tty -v $PWD/test-results:/reports --workdir /Account-Generator --name $conainer_name $registry:$BUILD_NUMBER pytest --cov --cov-report=html:reports/html_dir --cov-report=xml:reports/coverage.xml
           '''
         }
       }
