@@ -42,7 +42,7 @@ pipeline {
     			}
     	}
     	steps {
-          sh './test_access_rights.sh'
+          sh 'pip install mysql-connector-python==8.0.25 ./test_access_rights.sh'
     	}
     	post {
     			always {
