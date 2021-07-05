@@ -13,7 +13,7 @@ class TestAccessRights(unittest.TestCase):
     def test_change_to_manger(self):
         #change user name
         #check admin
-        self.assertTrue(self.checker.check_admin("admin","admin1")) # Fun Checkadmin takes user,pass from input User login Test admin account
+        self.assertTrue(self.checker.check_admin("admin","admin")) # Fun Checkadmin takes user,pass from input User login Test admin account
         self.assertEqual(self.checker.change_to_manager("TestUser","admin", "admin"),"The account has been changed to admin status.") # changing the TestUser account into a admin should return 1 row edited
 
     def test_change_to_admin(self):
