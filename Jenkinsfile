@@ -1,7 +1,7 @@
 pipeline {
   environment {
     PROJECT_DIR = "/Account-Generator"
-    CONTAINER_NAME = "account-generation"
+    CONTAINER_NAME = "account-generation1"
     DOCKER_ACCOUNT = "jamesdidit72"
     REGISTRY = "$DOCKER_ACCOUNT" + "$CONTAINER_NAME"
     registryCredential = "docker_auth"
