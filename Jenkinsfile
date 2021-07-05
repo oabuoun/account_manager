@@ -34,7 +34,7 @@ pipeline {
     	steps {
         script {
           sh '''
-            docker run --tty --name $conainer_name $registry:$BUILD_NUMBER pytest
+            docker run --rm --tty -v $PWD/reports:/reports --workdir /Account-Generator --name $conainer_name $registry:$BUILD_NUMBER pytest
           '''
         }
       }
