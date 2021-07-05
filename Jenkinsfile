@@ -22,7 +22,8 @@ pipeline {
     stage('Build-Test-Image') {
     	steps{
         sh '''
-          IMAGE_NAME=\$registry+:$BUILD_NUMBER
+          REG=\$registry
+          IMAGE_NAME=${REG}:${BUILD_NUMBER}
   			  docker build -t $IMAGE_NAME .
         '''
     	}
