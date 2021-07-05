@@ -42,7 +42,7 @@ pipeline {
     			}
     	}
     	steps {
-          sh 'virtualenv venv & . venv/bin/activate & pip install -r requirements.txt && ./test_access_rights.sh'
+          sh 'virtualenv venv & pip install -r requirements.txt && ./test_access_rights.sh'
     	}
     	post {
     			always {
