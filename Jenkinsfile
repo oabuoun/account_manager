@@ -42,11 +42,11 @@ pipeline {
     			}
     	}
     	steps {
-          sh 'pip install mysql-connector-python==8.0.25 & ./test_access_rights.sh'
+          sh 'virtualenv venv & . venv/bin/activate & pip install -r requirements.txt && ./test_access_rights.sh'
     	}
     	post {
     			always {
-    					junit testResults: '**/test-results/*.xml'
+    					junit allowEmptyResults: true, testResults: '**/test-results/*.xml'
     			}
     	}
     }
