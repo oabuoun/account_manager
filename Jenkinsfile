@@ -33,7 +33,7 @@ pipeline {
     	steps {
         script {
           sh '''
-            docker run -it $registry:$BUILD_NUMBER pytest
+            docker run --tty --name $registry $registry:$BUILD_NUMBER pytest
           '''
         }
       }
