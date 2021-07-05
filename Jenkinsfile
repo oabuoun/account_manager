@@ -1,6 +1,7 @@
 pipeline {
   environment {
     registry = "oabuoun/account-generation"
+    IMAGE_NAME=${REG}:${BUILD_NUMBER}
     registryCredential = "docker_auth"
     dockerImage = ''
   }
@@ -22,42 +23,21 @@ pipeline {
     stage('Build-Test-Image') {
     	steps{
         sh '''
-          REG=\$registry
-          IMAGE_NAME=${REG}:${BUILD_NUMBER}
           pwd
           ls -la
-  			  docker build -t $IMAGE_NAME .
+  			  docker build -t $registry:$BUILD_NUMBER .
         '''
     	}
     }
 
-    stage('Build') {
-      agent {
-          docker {
-              image dockerImage
-          }
-      }
-      steps {
-          withCredentials([string(credentialsId: 'sql_auth', variable: 'sqlCredential')]){
-            sh 'echo $sqlCredential > .mysql_password'
-          }
-          sh 'python3 -m venv venv'
-          sh './build.sh'
-          stash(name: 'compiled-results', includes: 'Account-Generator/*.py*')
-      }
-    }
-
     stage('Test access rights') {
-    	agent {
-    			docker {
-    					image dockerImage
-    			}
-    	}
     	steps {
+        script {
           sh '''
-            ./test_access_rights.sh
+            docker run --tty --name $registry:$BUILD_NUMBER pytest
           '''
-    	}
+        }
+      }
     	post {
     			always {
     					junit testResults: '**/test-results/*.xml'
