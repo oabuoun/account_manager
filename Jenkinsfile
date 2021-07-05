@@ -1,5 +1,6 @@
 pipeline {
   environment {
+    conainer_name = "account-generation"
     registry = "oabuoun/account-generation"
     registryCredential = "docker_auth"
     dockerImage = ''
@@ -33,7 +34,7 @@ pipeline {
     	steps {
         script {
           sh '''
-            docker run --tty --name $registry $registry:$BUILD_NUMBER pytest
+            docker run --tty --name $conainer_name $registry:$BUILD_NUMBER pytest
           '''
         }
       }
