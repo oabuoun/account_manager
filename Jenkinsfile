@@ -19,6 +19,25 @@ pipeline {
     		}
     }
 
+    def dockerImage
+    stage('Build-Image') {
+    	steps{
+    			script {
+    			dockerImage = docker.build registry + ":$BUILD_NUMBER"
+    			}
+    	}
+    }
+
+    stage('test') {
+        dockerImage.inside {
+            sh '. /tmp/venv/bin/activate && python -m pytest --junitxml=build/results.xml'
+        }
+    }
+    
+    stage('collect test results') {
+        junit 'build/results.xml'
+    }
+
     stage('Build') {
       agent {
           docker {
